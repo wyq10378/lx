@@ -1,0 +1,26 @@
+name: Jekyll Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Create docs directory if not exists
+        run: |
+          if [ ! -d "/github/workspace/docs" ]; then
+            mkdir -p /github/workspace/docs
+          fi
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./docs/_site
